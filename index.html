@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/01928e97f1.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="data.js" defer></script>
+    <script src="script.js" defer></script>
+    <title>Poke Auction</title>
+</head>
+<body>
+    <h1>Poke Auction</h1>
+
+    <!-- SETUP -->
+
+    <section id="setup">
+        <div class="smallerSection" id="playerSelection">
+            <h2>PLAYERS</h2>
+            <ol id="playerNameInputs">
+                <li id="playerName1">
+                    <input type="text">
+                </li>
+            </ol>
+            <div id="addPlayer">
+                <i class="fa-solid fa-minus clickable" onclick="playerCountRemove()"></i>
+                <p>New Players</p>
+                <i class="fa-solid fa-plus clickable" onclick="playerCountAdd()"></i>
+            </div>
+        </div>
+        <div class="smallerSection">
+            <h2>STARTING MONEY</h2>
+            <div id="moneySelector">
+                <i class="fa-solid fa-minus clickable" onclick="decreaseStartingMoney()"></i>
+                <h3 id="startingMoney">1200</h3>
+                <i class="fa-solid fa-plus clickable" onclick="increaseStartingMoney()"></i>
+            </div>
+        </div>
+        <button id="startAuction" onclick="startAuction()" class="clickable">Start Auction</button>
+    </section>
+
+    <!-- AUCTION -->
+
+    <section id="auction">
+        <img src="assets/pokeballIcon.png" id="claimedImg" class="hidden">
+        <div id="auctionSprite">
+            <img src="https://img.pokemondb.net/sprites/scarlet-violet/normal/bulbasaur.png">
+        </div>
+        <div>
+            <div id="nameSection"><h2 id="pokemonName">Bulbasaur </h2></div>
+            <div id="types">
+                <h3 class="Grass">GRASS</h3>
+                <h3 class="Poison">POISON</h3>
+            </div>
+            <div class="additionalOptions">
+                <select id="nature" onchange="setNature()" autocomplete="off">
+                    <option>Select Nature</option>
+                    <option>Lonely (+ATK -DEF)</option>
+                    <option>Adament (+ATK -S.ATK)</option>
+                    <option>Naughty (+ATK -S.DEF)</option>
+                    <option>Brave (+ATK -SPD)</option>
+                    <option>Bold (+DEF -ATK)</option>
+                    <option>Impish (+DEF -S.ATK)</option>
+                    <option>Lax (+DEF -S.DEF)</option>
+                    <option>Relaxed (+DEF -SPD)</option>
+                    <option>Modest (+S.ATK -ATK)</option>
+                    <option>Mild (+S.ATK -DEF)</option>
+                    <option>Rash (+S.ATK -S.DEF)</option>
+                    <option>Quiet (+S.ATK -SPD)</option>
+                    <option>Calm (+S.DEF -ATK)</option>
+                    <option>Gentle (+S.DEF -DEF)</option>
+                    <option>Careful (+S.DEF -S.ATK)</option>
+                    <option>Sassy (+S.DEF -SPD)</option>
+                    <option>Timid (+SPD -ATK)</option>
+                    <option>Hasty (+SPD -DEF)</option>
+                    <option>Jolly (+SPD -S.ATK)</option>
+                    <option>Naive (+SPD -S.DEF)</option>
+                    <option>Quirky (NONE)</option>
+                </select>
+                <select id="heldItem" onchange="setHeldItem()" autocomplete="off">
+                    <option>Select Item</option>
+                    <option>--- DEFENSIVE ---</option>
+                    <option>Ability Shield</option>
+                    <option>Clear Amulet</option>
+                    <option>Covert Cloak</option>
+                    <option>Eviolite</option>
+                    <option>Focus Sash</option>
+                    <option>Heavy-Duty Boots</option>
+                    <option>Protective Pads</option>
+                    <option>Safety Goggles</option>
+                    <option>Shed Tail</option>
+                    <option>Utility Umbrella</option>
+                    <option>--- OFFENSIVE ---</option>
+                    <option>Big Root</option>
+                    <option>Expert Belt</option>
+                    <option>Life Orb</option>
+                    <option>Loaded Dice</option>
+                    <option>Metronome</option>
+                    <option>Assault Vest</option>
+                    <option>Choice Band</option>
+                    <option>Choice Scarf</option>
+                    <option>Choice Specs</option>
+                    <option>Wide Lens</option>
+                    <option>Zoom Lens</option>
+                    <option>Muscle Band</option>
+                    <option>Wise Glasses</option>
+                    <option>Razor Claw</option>
+                    <option>Razor Fang</option>
+                    <option>--- CONDITIONAL ---</option>
+                    <option>Air Balloon</option>
+                    <option>Blunder Policy</option>
+                    <option>Room Service</option>
+                    <option>Throat Spray</option>
+                    <option>Weakness Policy</option>
+                    <option>Eject Button</option>
+                    <option>Eject Pack</option>
+                    <option>Red Card</option>
+                    <option>Mental Herb</option>
+                    <option>Mirror Herb</option>
+                    <option>Power Herb</option>
+                    <option>White Herb</option>
+                    <option>Booster Energy</option>
+                    <option>Electric Seed</option>
+                    <option>Grassy Seed</option>
+                    <option>Misty Seed</option>
+                    <option>Psychic Seed</option>
+                    <option>Bright Powder</option>
+                    <option>Quick Claw</option>
+                    <option>King's Rock</option>
+                    <option>--- DMG/HEAL ---</option>
+                    <option>Leftovers</option>
+                    <option>Rocky Helmet</option>
+                    <option>Black Sludge</option>
+                    <option>Flame Orb</option>
+                    <option>Shell Bell</option>
+                    <option>Sticky Barb</option>
+                    <option>Toxic Orb</option>
+                    <option>Lum Berry</option>
+                    <option>Sitrus Berry</option>
+                    <option>--- EXTENDERS ---</option>
+                    <option>Damp Rock</option>
+                    <option>Grip Claw</option>
+                    <option>Heat Rock</option>
+                    <option>Icy Rock</option>
+                    <option>Light Clay</option>
+                    <option>Smooth Rock</option>
+                    <option>Terrain Extender</option>
+                    <option>--- BOOST BY TYPE ---</option>
+                    <option>Black Belt</option>
+                    <option>Charcoal</option>
+                    <option>Dragon Fang</option>
+                    <option>Fairy Feather</option>
+                    <option>Hard Stone</option>
+                    <option>Magnet</option>
+                    <option>Metal Coat</option>
+                    <option>Miracle Seed</option>
+                    <option>Mystic Water</option>
+                    <option>Never-Melt Ice</option>
+                    <option>Poison Barb</option>
+                    <option>Sharp Beak</option>
+                    <option>Silk Scarf</option>
+                    <option>Silver Powder</option>
+                    <option>Soft Sand</option>
+                    <option>Spell Tag</option>
+                    <option>Twisted Spoon</option>
+                    <option>--- HALF BY TYPE ---</option>
+                    <option>Occa Berry</option>
+                    <option>Passho Berry</option>
+                    <option>Wacan Berry</option>
+                    <option>Rindo Berry</option>
+                    <option>Yache Berry</option>
+                    <option>Chople Berry</option>
+                    <option>Kebia Berry</option>
+                    <option>Shuca Berry</option>
+                    <option>Coba Berry</option>
+                    <option>Papaya Berry</option>
+                    <option>Tanga Berry</option>
+                    <option>Charti Berry</option>
+                    <option>Kasib Berry</option>
+                    <option>Haban Berry</option>
+                    <option>Colbur Berry</option>
+                    <option>Babiri Berry</option>
+                    <option>Chilan Berry</option>
+                    <option>Roseli Berry</option>
+                </select>
+                <select id="teraType" onchange="setTeraType()" autocomplete="off">
+                    <option>Select Tera</option>
+                    <option>Normal</option>
+                    <option>Fire</option>
+                    <option>Water</option>
+                    <option>Electric</option>
+                    <option>Grass</option>
+                    <option>Ice</option>
+                    <option>Fighting</option>
+                    <option>Poison</option>
+                    <option>Ground</option>
+                    <option>Flying</option>
+                    <option>Psychic</option>
+                    <option>Bug</option>
+                    <option>Rock</option>
+                    <option>Ghost</option>
+                    <option>Dragon</option>
+                    <option>Dark</option>
+                    <option>Steel</option>
+                    <option>Fairy</option>
+                    <option>Stellar</option>
+                </select>
+            </div>
+        </div>
+        <div id="stats">
+            <div id="statsTop">
+                <p id="bstValue">BST 318</p>
+                <div id="auctionPlace">
+                    <i class="fa-solid fa-angle-left" onclick="changePokemon(-1)" tabindex="0"></i>
+                    <p><div id="currentPokemon">1</div>/<div id="maxPokemon">30</div></p>
+                    <i class="fa-solid fa-angle-right" onclick="changePokemon(1)" tabindex="0"></i>
+                </div>
+            </div>
+            <div id="statsList">
+                <div class="statsItem">
+                    <p id="hpTitle" onclick="updateEV('hpTitle')" class="clickable" tabindex="0">HP</p>
+                    <div class="statBar" id="hpBar">
+                        <div class="filledBar" style="flex-grow: 45;"></div>
+                        <div class="emptyBar" style="flex-grow: 155;"></div>
+                    </div>
+                    <p id="hpValue">45</p>
+                </div>
+                <div class="statsItem">
+                    <p id="atkTitle" onclick="updateEV('atkTitle')" class="clickable" tabindex="0">ATK</p>
+                    <div class="statBar" id="atkBar">
+                        <div class="filledBar" style="flex-grow: 45;"></div>
+                        <div class="emptyBar" style="flex-grow: 155;"></div>
+                    </div>
+                    <p id="atkValue">45</p>
+                </div>
+                <div class="statsItem">
+                    <p id="defTitle" onclick="updateEV('defTitle')" class="clickable" tabindex="0">DEF</p>
+                    <div class="statBar" id="defBar">
+                        <div class="filledBar" style="flex-grow: 45;"></div>
+                        <div class="emptyBar" style="flex-grow: 155;"></div>
+                    </div>
+                    <p id="defValue">45</p>
+                </div>
+                <div class="statsItem">
+                    <p id="satkTitle" onclick="updateEV('satkTitle')" class="clickable" tabindex="0">S.ATK</p>
+                    <div class="statBar" id="satkBar">
+                        <div class="filledBar" style="flex-grow: 45;"></div>
+                        <div class="emptyBar" style="flex-grow: 155;"></div>
+                    </div>
+                    <p id="satkValue">45</p>
+                </div>
+                <div class="statsItem">
+                    <p id="sdefTitle" onclick="updateEV('sdefTitle')" class="clickable" tabindex="0">S.DEF</p>
+                    <div class="statBar" id="sdefBar">
+                        <div class="filledBar" style="flex-grow: 45;"></div>
+                        <div class="emptyBar" style="flex-grow: 155;"></div>
+                    </div>
+                    <p id="sdefValue">45</p>
+                </div>
+                <div class="statsItem">
+                    <p id="spdTitle" onclick="updateEV('spdTitle')" class="clickable" tabindex="0">SPD</p>
+                    <div class="statBar" id="spdBar">
+                        <div class="filledBar" style="flex-grow: 45;"></div>
+                        <div class="emptyBar" style="flex-grow: 155;"></div>
+                    </div>
+                    <p id="spdValue">45</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="ability">
+            <div id="abilityName">
+                <h4 id="abilityNameValue">Overgrow</h4>
+            </div>
+            <p id="abilityDesc">Increases the power of Grass-type moves by 50% (1.5×) when the ability-bearer's HP falls below a third of its maximum.</p>
+        </div>
+
+        <div id="moveset">
+            <div id="move1" class="moveCard">
+                <div class="moveCardSections">
+                    <h4 id="moveName1">Tackle</h4>
+                    <div class="moveTypes">
+                        <h3 id="moveType1" class="Normal">NORMAL</h3>
+                        <img id="moveCategory1" src="assets/PhysicalMove.png">
+                    </div>
+                </div>
+                <div class="moveStats">
+                    <p id="movePower1">PWR 40</p>
+                    <p id="moveAccuracy1">ACC 100</p>
+                    <p id="movePP1">PP 56</p>
+                    <img id="reroll1" src="assets/dice.png" onclick="rerollMove(moveNumber1, moveName1, moveType1, moveCategory1, movePower1, moveAccuracy1, movePP1, moveDesc1)" class="clickable" tabindex="0">
+                </div>
+                <p class="moveDesc" id="moveDesc1">It deals damage with no additional effects.</p>
+            </div>
+            <div id="move2" class="moveCard">
+                <div class="moveCardSections">
+                    <h4 id="moveName2">Tackle</h4>
+                    <div class="moveTypes">
+                        <h3 id="moveType2" class="Normal">NORMAL</h3>
+                        <img id="moveCategory2" src="assets/PhysicalMove.png">
+                    </div>
+                </div>
+                <div class="moveStats">
+                    <p id="movePower2">PWR 40</p>
+                    <p id="moveAccuracy2">ACC 100</p>
+                    <p id="movePP2">PP 56</p>
+                    <img id="reroll2" src="assets/dice.png" onclick="rerollMove(moveNumber2, moveName2, moveType2, moveCategory2, movePower2, moveAccuracy2, movePP2, moveDesc2)" class="clickable" tabindex="0">
+                </div>
+                <p class="moveDesc" id="moveDesc2">It deals damage with no additional effects.</p>
+            </div>
+            <div id="move3" class="moveCard">
+                <div class="moveCardSections">
+                    <h4 id="moveName3">Tackle</h4>
+                    <div class="moveTypes">
+                        <h3 id="moveType3" class="Normal">NORMAL</h3>
+                        <img id="moveCategory3" src="assets/PhysicalMove.png">
+                    </div>
+                </div>
+                <div class="moveStats">
+                    <p id="movePower3">PWR 40</p>
+                    <p id="moveAccuracy3">ACC 100</p>
+                    <p id="movePP3">PP 56</p>
+                    <img id="reroll3" src="assets/dice.png" onclick="rerollMove(moveNumber3, moveName3, moveType3, moveCategory3, movePower3, moveAccuracy3, movePP3, moveDesc3)" class="clickable" tabindex="0">
+                </div>
+                <p class="moveDesc" id="moveDesc3">It deals damage with no additional effects.</p>
+            </div>
+            <div id="move4" class="moveCard">
+                <div class="moveCardSections">
+                    <h4 id="moveName4">Tackle</h4>
+                    <div class="moveTypes">
+                        <h3 id="moveType4" class="Normal">NORMAL</h3>
+                        <img id="moveCategory4" src="assets/PhysicalMove.png">
+                    </div>
+                </div>
+                <div class="moveStats">
+                    <p id="movePower4">PWR 40</p>
+                    <p id="moveAccuracy4">ACC 100</p>
+                    <p id="movePP4">PP 56</p>
+                    <img id="reroll4" src="assets/dice.png" onclick="rerollMove(moveNumber4, moveName4, moveType4, moveCategory4, movePower4, moveAccuracy4, movePP4, moveDesc4)" class="clickable" tabindex="0">
+                </div>
+                <p class="moveDesc" id="moveDesc4">It deals damage with no additional effects.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="playerInventories">
+        
+    </section>
+</body>
+</html>
